@@ -1,3 +1,5 @@
+const { verifyJWT } = require("../utils");
+
 const checkForUser = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   if (!authHeader) {
@@ -14,6 +16,14 @@ const checkForUser = (req, res, next) => {
   }
 
   const token = authSplits[1];
+  try {
+    const jwtPayload = verifyJWT({ token });
+    const userId = jwtPayload.user;
+    res.locals.user = userId;
+    next();
+  } catch (e) {
+    next(e);
+  }
 };
 
 module.exports = {

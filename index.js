@@ -1,4 +1,5 @@
 const express = require("express");
+const morgan = require("morgan");
 const env = require("dotenv");
 const userRouterController = require("./controllers/users.routerController");
 const movieRouterController = require("./controllers/movies.routerController");
@@ -6,6 +7,7 @@ const movieRouterController = require("./controllers/movies.routerController");
 const db = require("./models/index");
 const app = express();
 app.use(express.json());
+app.use(morgan("tiny"));
 
 env.config();
 
